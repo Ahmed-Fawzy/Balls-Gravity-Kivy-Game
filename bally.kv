@@ -1,0 +1,1354 @@
+
+#:import randint random.randint
+#:import get_color_from_hex kivy.utils.get_color_from_hex
+#:import os os
+#:import sleep time.sleep
+
+
+<aaaaa>:
+	id: sdsad
+
+	main: main
+	orientation: 'vertical'
+
+	canvas.after:
+		Color:
+			rgba: .5,.9,.8,.08
+			#rgba: sq.colol()
+		Rectangle:
+			size: self.size
+
+		PushMatrix
+		Rotate:
+			origin: self.width / 2., self.height / 2.
+			angle: app.time * 6
+			axis: 0, 0, 1
+		Rectangle:
+			pos: (self.width / 3.) - 256, (self.height / 2.) - 256
+			size: 512, 256
+			texture: app.textures['gear']
+		Rotate:
+			origin: self.center
+			angle: -app.time * 5
+			axis: 0, 0, 1
+		Rectangle:
+			pos: (self.width / 2.) - 384, (self.height / 3.) - 384
+			size: 768, 384
+			texture: app.textures['gear']
+		Rotate:
+			origin: self.center
+			angle: app.time * 5
+			axis: 0, 0, 1
+		Rectangle:
+			pos: (self.width / 2.) , (self.height / 2.) 
+			size: 1024, 512
+			texture: app.textures['gear']
+		Rotate:
+			origin: self.center
+			angle: -app.time * 6
+			axis: 0, 0, 1
+		Rectangle:
+			pos: (self.width / 2.) ,  640
+			size: 1280, 640
+			texture: app.textures['gear']
+		Rotate:
+			origin: self.center
+			angle: app.time * 6
+			axis: 0, 0, 1
+		Rectangle:
+			pos: (self.width / 2.) ,  768
+			size: 1536, 768
+			texture: app.textures['gear']
+		PopMatrix
+
+
+	BoxLayout:
+		orientation: 'horizontal'		
+		size_hint_y: .2
+		padding: '10dp', '10dp'
+		spacing: '5dp'
+		#height: '70sp'
+
+		Button:
+			size_hint_x: .4
+			border: 30,30,30,30
+			background_normal: 'images/normal.png'
+			background_down: 'images/down.png'
+			bold: True
+			font_size: '26sp'
+			color: 1, 1, 1, 1
+		#	canvas:
+		#		Color:
+		#			rgb: .6,.6,.6,1
+		#		Ellipse:
+		#			pos: self.x , self.y
+		#			size: self.width , self.height
+						
+			text: 'New Game'
+			on_release:
+
+				main.inter.reset_with_shuffle()
+				app.score = 0
+				#root.parent.get_parent_window()
+				#qs.remove_widget(int)
+				#int.reset()
+				#int.reset_with_shuffle()
+
+				#app.run()
+				#qs.add_widget(int)
+
+
+		BoxLayout:
+			orientation: 'vertical'
+			size_hint_x: .3
+
+			Label:
+				font_size: '22sp'
+				bold: True
+				text: 'Score'
+
+			Label:
+				color: 1, 1, 1, 1
+				bold: True
+				font_size: '18sp'
+				text: '{}'.format(app.score)
+
+		BoxLayout:
+			orientation: 'vertical'
+			size_hint_x: .3
+
+			Label:
+				font_size: '22sp'
+				bold: True
+				text: 'Best'
+
+			Label:
+				color: 1, 1, 1, 1
+				bold: True
+				font_size: '18sp'
+				text: '{}'.format(app.best_score)
+
+
+
+	Main:
+		id: main
+		#size_hint_y: .7
+
+	BoxLayout:
+		size_hint_y: .15
+		#Label:
+		#	text: 'Here is Ads'
+
+
+
+<Main>:
+	id: sq
+	qs: qs
+	#wid: wid
+	#reh: reh
+	inter: inter
+	#pop: pop.__self__
+
+	BoxLayout:
+		orientation: 'vertical'
+		padding: '0dp', '5dp'
+		spacing: '5dp'
+		size_hint_y: None
+
+		Square:
+			id: qs
+			inter: inter
+			Interface:
+				id: inter
+				pop: pop.__self__
+				nextpop: nextpop.__self__
+
+			nextlevelpopup:
+				id: nextpop
+				#wid: wid
+				#reh: reh
+				on_parent: if self.parent == qs: qs.remove_widget(self)
+
+				size_hint_y: .5
+				size_hint_x: .8
+
+				#canvas:
+				#	Color:
+				#		rgb: 50./255, 108./255, 137./255
+				#	Rectangle:
+				#		size: self.size
+				#		pos: self.pos
+				BoxLayout:
+					background_color: (0.7,0.6,0.6,1)
+					padding: 20,20,20,20
+					orientation: 'vertical'
+
+					BoxLayout:
+						orientation: 'horizontal'
+						size_hint_y: .25
+
+						Label:
+							#size_hint_y: .3
+							font_size: '26sp'
+							text: 'Congratulations'
+							bold: True
+						AsyncImage:
+							size_hint_x: .3
+							source: 'images/happy.png'
+
+					BoxLayout:
+						orientation: 'horizontal'
+						size_hint_y: .25
+						Label:
+							#size_hint_y: .3
+							font_size: '24sp'
+							text: 'Your Score'
+							bold: True
+
+						Label:
+							#size_hint_y: .3
+							font_size: '24sp'
+							text: str(app.score)
+							bold: True
+
+					AnchorLayout:
+						anchor_x: "center"
+						anchor_y: "center"
+						size_hint_y: .25
+						Button:
+							size_hint: .8, .7
+							border: 30,30,30,30
+							background_normal: 'images/normal.png'
+							background_down: 'images/down.png'
+							bold: True
+							font_size: '30sp'
+							color: 1, 1, 1, 1
+							text: 'Next Level'
+							on_release:
+								inter.reset_with_shuffle()
+								nextpop.dismiss()
+
+					BoxLayout:
+						orientation: 'horizontal'
+						size_hint_y: .25
+						padding: '10dp', '10dp'
+						spacing: '5dp'
+						Button:
+							size_hint: .8, .8
+							border: 20,20,20,20
+							background_normal: 'images/normal.png'
+							background_down: 'images/down.png'
+							bold: True
+							font_size: '26sp'
+							color: 1, 1, 1, 1
+							text: 'Rate'
+							on_release:
+								import webbrowser
+								webbrowser.open('https://play.google.com/store/apps/details?id=org.ballsgravity.ballsgravity')
+
+						Button:
+							size_hint: .8, .8
+							border: 20,20,20,20
+							background_normal: 'images/normal.png'
+							background_down: 'images/down.png'
+							bold: True
+							font_size: '26sp'
+							color: 1, 1, 1, 1
+							text: 'Share'
+							on_release:
+								inter.share_score()
+
+
+
+			gameoverpopup:
+				txtscore: txtscore
+				id: pop
+				#wid: wid
+				#reh: reh
+				on_parent: if self.parent == qs: qs.remove_widget(self)
+
+				size_hint_y: .6
+				size_hint_x: .8
+
+				#canvas:
+				#	Color:
+				#		rgb: 50./255, 108./255, 137./255
+				#	Rectangle:
+				#		size: self.size
+				#		pos: self.pos
+				BoxLayout:
+					background_color: (0.7,0.6,0.6,1)
+					padding: 20,20,20,20
+					orientation: 'vertical'
+
+
+					BoxLayout:
+						orientation: 'horizontal'
+						size_hint_y: .25
+
+						Label:
+							#size_hint_y: .3
+							font_size: '26sp'
+							text: 'Game Over'
+							bold: True
+						AsyncImage:
+							size_hint_x: .3
+							source: 'images/sad.png'
+
+
+					BoxLayout:
+						orientation: 'horizontal'
+						size_hint_y: .25
+						Label:
+							id: txtscore
+							size_hint_x: .65
+							font_size: '24sp'
+							text: 'Your Score'
+							bold: True
+
+						Label:
+							size_hint_x: .35
+							font_size: '24sp'
+							text: str(app.score)
+							bold: True
+
+
+					#BoxLayout:
+					#	orientation: 'vertical'
+					#	id: reh
+					#	size_hint_y: .4
+					#	Widget:
+					#		id: wid
+					#		pos: self.pos
+					#		size: self.size
+
+
+
+					AnchorLayout:
+						anchor_x: "center"
+						anchor_y: "center"
+						size_hint_y: .25
+						Button:
+							size_hint: .8, .7
+							border: 30,30,30,30
+							background_normal: 'images/normal.png'
+							background_down: 'images/down.png'
+							bold: True
+							font_size: '26sp'
+							color: 1, 1, 1, 1
+							text: 'Play Again'
+							on_release:
+								inter.reset_with_shuffle()
+								pop.dismiss()
+
+
+								#print app
+								#print root
+								#print self
+
+
+					BoxLayout:
+						orientation: 'horizontal'
+						size_hint_y: .25
+						padding: '10dp', '10dp'
+						spacing: '5dp'
+						Button:
+							size_hint: .8, .8
+							border: 20,20,20,20
+							background_normal: 'images/normal.png'
+							background_down: 'images/down.png'
+							bold: True
+							font_size: '26sp'
+							color: 1, 1, 1, 1
+							text: 'Rate'
+							on_release:
+								import webbrowser
+								webbrowser.open('https://play.google.com/store/apps/details?id=org.ballsgravity.ballsgravity')
+
+						Button:
+							size_hint: .8, .8
+							border: 20,20,20,20
+							background_normal: 'images/normal.png'
+							background_down: 'images/down.png'
+							bold: True
+							font_size: '26sp'
+							color: 1, 1, 1, 1
+							text: 'Share'
+							on_release:
+								inter.share_score()
+
+
+
+<InterFace>:
+	id: ss
+	a1:a1.__self__
+	a2:a2.__self__
+	a3:a3.__self__
+	a4:a4.__self__
+	a5:a5.__self__
+	a6:a6.__self__
+	a7:a7.__self__
+	a8:a8.__self__
+
+	b1:b1.__self__
+	b2:b2.__self__
+	b3:b3.__self__
+	b4:b4.__self__
+	b5:b5.__self__
+	b6:b6.__self__
+	b7:b7.__self__
+	b8:b8.__self__
+
+	c1:c1.__self__
+	c2:c2.__self__
+	c3:c3.__self__
+	c4:c4.__self__
+	c5:c5.__self__
+	c6:c6.__self__
+	c7:c7.__self__
+	c8:c8.__self__
+
+	d1:d1.__self__
+	d2:d2.__self__
+	d3:d3.__self__
+	d4:d4.__self__
+	d5:d5.__self__
+	d6:d6.__self__
+	d7:d7.__self__
+	d8:d8.__self__
+
+	e1:e1.__self__
+	e2:e2.__self__
+	e3:e3.__self__
+	e4:e4.__self__
+	e5:e5.__self__
+	e6:e6.__self__
+	e7:e7.__self__
+	e8:e8.__self__
+
+	f1:f1.__self__
+	f2:f2.__self__
+	f3:f3.__self__
+	f4:f4.__self__
+	f5:f5.__self__
+	f6:f6.__self__
+	f7:f7.__self__
+	f8:f8.__self__
+
+	g1:g1.__self__
+	g2:g2.__self__
+	g3:g3.__self__
+	g4:g4.__self__
+	g5:g5.__self__
+	g6:g6.__self__
+	g7:g7.__self__
+	g8:g8.__self__
+
+	h1:h1.__self__
+	h2:h2.__self__
+	h3:h3.__self__
+	h4:h4.__self__
+	h5:h5.__self__
+	h6:h6.__self__
+	h7:h7.__self__
+	h8:h8.__self__
+
+	Widget:
+		id: a1
+		size_hint: .125, .125
+		pos_hint: {'x': 0, 'y': 0}
+
+		canvas.after:
+			Color:
+				rgb: ss.rgb[0]
+				#rgb: ss.getcolor()
+			Ellipse:
+				pos: self.x + 5, self.y + 5
+				size: self.width - 10, self.height - 10
+				texture: app.textures['logo']
+
+	Widget:
+		id: a2
+		size_hint: .125, .125
+		pos_hint: {'x': 0, 'y': .125}
+
+		canvas.after:
+			Color:
+				rgb: ss.rgb[1]
+				#rgb: ss.getcolor()
+			Ellipse:
+				pos: self.x + 5, self.y + 5
+				size: self.width - 10, self.height - 10
+				texture: app.textures['logo']
+
+	Widget:
+		id: a3
+		size_hint: .125, .125
+		pos_hint: {'x': 0, 'y': .25}
+
+		canvas.after:
+			Color:
+				rgb: ss.rgb[2]
+				#rgb: ss.getcolor()
+			Ellipse:
+				pos: self.x + 5, self.y + 5
+				size: self.width - 10, self.height - 10
+				texture: app.textures['logo']
+
+	Widget:
+		id: a4
+		size_hint: .125, .125
+		pos_hint: {'x': 0, 'y': .375}
+
+		canvas.after:
+			Color:
+				rgb: ss.rgb[3]
+				#rgb: ss.getcolor()
+			Ellipse:
+				pos: self.x + 5, self.y + 5
+				size: self.width - 10, self.height - 10
+				texture: app.textures['logo']
+
+	Widget:
+		id: a5
+		size_hint: .125, .125
+		pos_hint: {'x': 0, 'y': .5}
+
+		canvas.after:
+			Color:
+				rgb: ss.rgb[4]
+				#rgb: ss.getcolor()
+			Ellipse:
+				pos: self.x + 5, self.y + 5
+				size: self.width - 10, self.height - 10
+				texture: app.textures['logo']
+
+	Widget:
+		id: a6
+		size_hint: .125, .125
+		pos_hint: {'x': 0, 'y': .625}
+
+		canvas.after:
+			Color:
+				rgb: ss.rgb[5]
+				#rgb: ss.getcolor()
+			Ellipse:
+				pos: self.x + 5, self.y + 5
+				size: self.width - 10, self.height - 10
+				texture: app.textures['logo']
+
+	Widget:
+		id: a7
+		size_hint: .125, .125
+		pos_hint: {'x': 0, 'y': .75}
+
+		canvas.after:
+			Color:
+				rgb: ss.rgb[6]
+				#rgb: ss.getcolor()
+			Ellipse:
+				pos: self.x + 5, self.y + 5
+				size: self.width - 10, self.height - 10
+				texture: app.textures['logo']
+
+	Widget:
+		id: a8
+		size_hint: .125, .125
+		pos_hint: {'x': 0, 'y': .875}
+
+		canvas.after:
+			Color:
+				rgb: ss.rgb[7]
+				#rgb: ss.getcolor()
+			Ellipse:
+				pos: self.x + 5, self.y + 5
+				size: self.width - 10, self.height - 10
+				texture: app.textures['logo']
+
+	Widget:
+		id: b1
+		size_hint: .125, .125
+		pos_hint: {'x': .125, 'y': 0}
+
+		canvas.after:
+			Color:
+				rgb: ss.rgb[8]
+				#rgb: ss.getcolor()
+			Ellipse:
+				pos: self.x + 5, self.y + 5
+				size: self.width - 10, self.height - 10
+				texture: app.textures['logo']
+
+	Widget:
+		id: b2
+		size_hint: .125, .125
+		pos_hint: {'x': .125, 'y': .125}
+
+		canvas.after:
+			Color:
+				rgb: ss.rgb[9]
+				#rgb: ss.getcolor()
+			Ellipse:
+				pos: self.x + 5, self.y + 5
+				size: self.width - 10, self.height - 10
+				texture: app.textures['logo']
+
+	Widget:
+		id: b3
+		size_hint: .125, .125
+		pos_hint: {'x': .125, 'y': .25}
+
+		canvas.after:
+			Color:
+				rgb: ss.rgb[10]
+				#rgb: ss.getcolor()
+			Ellipse:
+				pos: self.x + 5, self.y + 5
+				size: self.width - 10, self.height - 10
+				texture: app.textures['logo']
+
+	Widget:
+		id: b4
+		size_hint: .125, .125
+		pos_hint: {'x': .125, 'y': .375}
+
+		canvas.after:
+			Color:
+				rgb: ss.rgb[11]
+				#rgb: ss.getcolor()
+			Ellipse:
+				pos: self.x + 5, self.y + 5
+				size: self.width - 10, self.height - 10
+				texture: app.textures['logo']
+
+	Widget:
+		id: b5
+		size_hint: .125, .125
+		pos_hint: {'x': .125, 'y': .5}
+
+		canvas.after:
+			Color:
+				rgb: ss.rgb[12]
+				#rgb: ss.getcolor()
+			Ellipse:
+				pos: self.x + 5, self.y + 5
+				size: self.width - 10, self.height - 10
+				texture: app.textures['logo']
+
+	Widget:
+		id: b6
+		size_hint: .125, .125
+		pos_hint: {'x': .125, 'y': .625}
+
+		canvas.after:
+			Color:
+				rgb: ss.rgb[13]
+				#rgb: ss.getcolor()
+			Ellipse:
+				pos: self.x + 5, self.y + 5
+				size: self.width - 10, self.height - 10
+				texture: app.textures['logo']
+
+	Widget:
+		id: b7
+		size_hint: .125, .125
+		pos_hint: {'x': .125, 'y': .75}
+
+		canvas.after:
+			Color:
+				rgb: ss.rgb[14]
+				#rgb: ss.getcolor()
+			Ellipse:
+				pos: self.x + 5, self.y + 5
+				size: self.width - 10, self.height - 10
+				texture: app.textures['logo']
+
+	Widget:
+		id: b8
+		size_hint: .125, .125
+		pos_hint: {'x': .125, 'y': .875}
+
+		canvas.after:
+			Color:
+				rgb: ss.rgb[15]
+				#rgb: ss.getcolor()
+			Ellipse:
+				pos: self.x + 5, self.y + 5
+				size: self.width - 10, self.height - 10
+				texture: app.textures['logo']
+
+	Widget:
+		id: c1
+		size_hint: .125, .125
+		pos_hint: {'x': .25, 'y': 0}
+
+		canvas.after:
+			Color:
+				rgb: ss.rgb[16]
+				#rgb: ss.getcolor()
+			Ellipse:
+				pos: self.x + 5, self.y + 5
+				size: self.width - 10, self.height - 10
+				texture: app.textures['logo']
+
+	Widget:
+		id: c2
+		size_hint: .125, .125
+		pos_hint: {'x': .25, 'y': .125}
+
+		canvas.after:
+			Color:
+				rgb: ss.rgb[17]
+				#rgb: ss.getcolor()
+			Ellipse:
+				pos: self.x + 5, self.y + 5
+				size: self.width - 10, self.height - 10
+				texture: app.textures['logo']
+
+	Widget:
+		id: c3
+		size_hint: .125, .125
+		pos_hint: {'x': .25, 'y': .25}
+
+		canvas.after:
+			Color:
+				rgb: ss.rgb[18]
+				#rgb: ss.getcolor()
+			Ellipse:
+				pos: self.x + 5, self.y + 5
+				size: self.width - 10, self.height - 10
+				texture: app.textures['logo']
+
+	Widget:
+		id: c4
+		size_hint: .125, .125
+		pos_hint: {'x': .25, 'y': .375}
+
+		canvas.after:
+			Color:
+				rgb: ss.rgb[19]
+				#rgb: ss.getcolor()
+			Ellipse:
+				pos: self.x + 5, self.y + 5
+				size: self.width - 10, self.height - 10
+				texture: app.textures['logo']
+
+	Widget:
+		id: c5
+		size_hint: .125, .125
+		pos_hint: {'x': .25, 'y': .5}
+
+		canvas.after:
+			Color:
+				rgb: ss.rgb[20]
+				#rgb: ss.getcolor()
+			Ellipse:
+				pos: self.x + 5, self.y + 5
+				size: self.width - 10, self.height - 10
+				texture: app.textures['logo']
+
+	Widget:
+		id: c6
+		size_hint: .125, .125
+		pos_hint: {'x': .25, 'y': .625}
+
+		canvas.after:
+			Color:
+				rgb: ss.rgb[21]
+				#rgb: ss.getcolor()
+			Ellipse:
+				pos: self.x + 5, self.y + 5
+				size: self.width - 10, self.height - 10
+				texture: app.textures['logo']
+
+	Widget:
+		id: c7
+		size_hint: .125, .125
+		pos_hint: {'x': .25, 'y': .75}
+
+		canvas.after:
+			Color:
+				rgb: ss.rgb[22]
+				#rgb: ss.getcolor()
+			Ellipse:
+				pos: self.x + 5, self.y + 5
+				size: self.width - 10, self.height - 10
+				texture: app.textures['logo']
+
+	Widget:
+		id: c8
+		size_hint: .125, .125
+		pos_hint: {'x': .25, 'y': .875}
+
+		canvas.after:
+			Color:
+				rgb: ss.rgb[23]
+				#rgb: ss.getcolor()
+			Ellipse:
+				pos: self.x + 5, self.y + 5
+				size: self.width - 10, self.height - 10
+				texture: app.textures['logo']
+
+	Widget:
+		id: d1
+		size_hint: .125, .125
+		pos_hint: {'x': .375, 'y': 0}
+
+		canvas.after:
+			Color:
+				rgb: ss.rgb[24]
+				#rgb: ss.getcolor()
+			Ellipse:
+				pos: self.x + 5, self.y + 5
+				size: self.width - 10, self.height - 10
+				texture: app.textures['logo']
+
+	Widget:
+		id: d2
+		size_hint: .125, .125
+		pos_hint: {'x': .375, 'y': .125}
+
+		canvas.after:
+			Color:
+				rgb: ss.rgb[25]
+				#rgb: ss.getcolor()
+			Ellipse:
+				pos: self.x + 5, self.y + 5
+				size: self.width - 10, self.height - 10
+				texture: app.textures['logo']
+
+	Widget:
+		id: d3
+		size_hint: .125, .125
+		pos_hint: {'x': .375, 'y': .25}
+
+		canvas.after:
+			Color:
+				rgb: ss.rgb[26]
+				#rgb: ss.getcolor()
+			Ellipse:
+				pos: self.x + 5, self.y + 5
+				size: self.width - 10, self.height - 10
+				texture: app.textures['logo']
+
+	Widget:
+		id: d4
+		size_hint: .125, .125
+		pos_hint: {'x': .375, 'y': .375}
+
+		canvas.after:
+			Color:
+				rgb: ss.rgb[27]
+				#rgb: ss.getcolor()
+			Ellipse:
+				pos: self.x + 5, self.y + 5
+				size: self.width - 10, self.height - 10
+				texture: app.textures['logo']
+
+	Widget:
+		id: d5
+		size_hint: .125, .125
+		pos_hint: {'x': .375, 'y': .5}
+
+		canvas.after:
+			Color:
+				rgb: ss.rgb[28]
+				#rgb: ss.getcolor()
+			Ellipse:
+				pos: self.x + 5, self.y + 5
+				size: self.width - 10, self.height - 10
+				texture: app.textures['logo']
+
+	Widget:
+		id: d6
+		size_hint: .125, .125
+		pos_hint: {'x': .375, 'y': .625}
+
+		canvas.after:
+			Color:
+				rgb: ss.rgb[29]
+				#rgb: ss.getcolor()
+			Ellipse:
+				pos: self.x + 5, self.y + 5
+				size: self.width - 10, self.height - 10
+				texture: app.textures['logo']
+
+	Widget:
+		id: d7
+		size_hint: .125, .125
+		pos_hint: {'x': .375, 'y': .75}
+
+		canvas.after:
+			Color:
+				rgb: ss.rgb[30]
+				#rgb: ss.getcolor()
+			Ellipse:
+				pos: self.x + 5, self.y + 5
+				size: self.width - 10, self.height - 10
+				texture: app.textures['logo']
+
+	Widget:
+		id: d8
+		size_hint: .125, .125
+		pos_hint: {'x': .375, 'y': .875}
+
+		canvas.after:
+			Color:
+				rgb: ss.rgb[31]
+				#rgb: ss.getcolor()
+			Ellipse:
+				pos: self.x + 5, self.y + 5
+				size: self.width - 10, self.height - 10
+				texture: app.textures['logo']
+
+	Widget:
+		id: e1
+		size_hint: .125, .125
+		pos_hint: {'x': .5, 'y': 0}
+
+		canvas.after:
+			Color:
+				rgb: ss.rgb[32]
+				#rgb: ss.getcolor()
+			Ellipse:
+				pos: self.x + 5, self.y + 5
+				size: self.width - 10, self.height - 10
+				texture: app.textures['logo']
+
+	Widget:
+		id: e2
+		size_hint: .125, .125
+		pos_hint: {'x': .5, 'y': .125}
+
+		canvas.after:
+			Color:
+				rgb: ss.rgb[33]
+				#rgb: ss.getcolor()
+			Ellipse:
+				pos: self.x + 5, self.y + 5
+				size: self.width - 10, self.height - 10
+				texture: app.textures['logo']
+
+	Widget:
+		id: e3
+		size_hint: .125, .125
+		pos_hint: {'x': .5, 'y': .25}
+
+		canvas.after:
+			Color:
+				rgb: ss.rgb[34]
+				#rgb: ss.getcolor()
+			Ellipse:
+				pos: self.x + 5, self.y + 5
+				size: self.width - 10, self.height - 10
+				texture: app.textures['logo']
+
+	Widget:
+		id: e4
+		size_hint: .125, .125
+		pos_hint: {'x': .5, 'y': .375}
+
+		canvas.after:
+			Color:
+				rgb: ss.rgb[35]
+				#rgb: ss.getcolor()
+			Ellipse:
+				pos: self.x + 5, self.y + 5
+				size: self.width - 10, self.height - 10
+				texture: app.textures['logo']
+
+	Widget:
+		id: e5
+		size_hint: .125, .125
+		pos_hint: {'x': .5, 'y': .5}
+
+		canvas.after:
+			Color:
+				rgb: ss.rgb[36]
+				#rgb: ss.getcolor()
+			Ellipse:
+				pos: self.x + 5, self.y + 5
+				size: self.width - 10, self.height - 10
+				texture: app.textures['logo']
+
+	Widget:
+		id: e6
+		size_hint: .125, .125
+		pos_hint: {'x': .5, 'y': .625}
+
+		canvas.after:
+			Color:
+				rgb: ss.rgb[37]
+				#rgb: ss.getcolor()
+			Ellipse:
+				pos: self.x + 5, self.y + 5
+				size: self.width - 10, self.height - 10
+				texture: app.textures['logo']
+
+	Widget:
+		id: e7
+		size_hint: .125, .125
+		pos_hint: {'x': .5, 'y': .75}
+
+		canvas.after:
+			Color:
+				rgb: ss.rgb[38]
+				#rgb: ss.getcolor()
+			Ellipse:
+				pos: self.x + 5, self.y + 5
+				size: self.width - 10, self.height - 10
+				texture: app.textures['logo']
+
+	Widget:
+		id: e8
+		size_hint: .125, .125
+		pos_hint: {'x': .5, 'y': .875}
+
+		canvas.after:
+			Color:
+				rgb: ss.rgb[39]
+				#rgb: ss.getcolor()
+			Ellipse:
+				pos: self.x + 5, self.y + 5
+				size: self.width - 10, self.height - 10
+				texture: app.textures['logo']
+
+	Widget:
+		id: f1
+		size_hint: .125, .125
+		pos_hint: {'x': .625, 'y': 0}
+
+		canvas.after:
+			Color:
+				rgb: ss.rgb[40]
+				#rgb: ss.getcolor()
+			Ellipse:
+				pos: self.x + 5, self.y + 5
+				size: self.width - 10, self.height - 10
+				texture: app.textures['logo']
+
+	Widget:
+		id: f2
+		size_hint: .125, .125
+		pos_hint: {'x': .625, 'y': .125}
+
+		canvas.after:
+			Color:
+				rgb: ss.rgb[41]
+				#rgb: ss.getcolor()
+			Ellipse:
+				pos: self.x + 5, self.y + 5
+				size: self.width - 10, self.height - 10
+				texture: app.textures['logo']
+
+	Widget:
+		id: f3
+		size_hint: .125, .125
+		pos_hint: {'x': .625, 'y': .25}
+
+		canvas.after:
+			Color:
+				rgb: ss.rgb[42]
+				#rgb: ss.getcolor()
+			Ellipse:
+				pos: self.x + 5, self.y + 5
+				size: self.width - 10, self.height - 10
+				texture: app.textures['logo']
+
+	Widget:
+		id: f4
+		size_hint: .125, .125
+		pos_hint: {'x': .625, 'y': .375}
+
+		canvas.after:
+			Color:
+				rgb: ss.rgb[43]
+				#rgb: ss.getcolor()
+			Ellipse:
+				pos: self.x + 5, self.y + 5
+				size: self.width - 10, self.height - 10
+				texture: app.textures['logo']
+
+	Widget:
+		id: f5
+		size_hint: .125, .125
+		pos_hint: {'x': .625, 'y': .5}
+
+		canvas.after:
+			Color:
+				rgb: ss.rgb[44]
+				#rgb: ss.getcolor()
+			Ellipse:
+				pos: self.x + 5, self.y + 5
+				size: self.width - 10, self.height - 10
+				texture: app.textures['logo']
+
+	Widget:
+		id: f6
+		size_hint: .125, .125
+		pos_hint: {'x': .625, 'y': .625}
+
+		canvas.after:
+			Color:
+				rgb: ss.rgb[45]
+				#rgb: ss.getcolor()
+			Ellipse:
+				pos: self.x + 5, self.y + 5
+				size: self.width - 10, self.height - 10
+				texture: app.textures['logo']
+
+	Widget:
+		id: f7
+		size_hint: .125, .125
+		pos_hint: {'x': .625, 'y': .75}
+
+		canvas.after:
+			Color:
+				rgb: ss.rgb[46]
+				#rgb: ss.getcolor()
+			Ellipse:
+				pos: self.x + 5, self.y + 5
+				size: self.width - 10, self.height - 10
+				texture: app.textures['logo']
+
+	Widget:
+		id: f8
+		size_hint: .125, .125
+		pos_hint: {'x': .625, 'y': .875}
+
+		canvas.after:
+			Color:
+				rgb: ss.rgb[47]
+				#rgb: ss.getcolor()
+			Ellipse:
+				pos: self.x + 5, self.y + 5
+				size: self.width - 10, self.height - 10
+				texture: app.textures['logo']
+
+	Widget:
+		id: g1
+		size_hint: .125, .125
+		pos_hint: {'x': .75, 'y': 0}
+
+		canvas.after:
+			Color:
+				rgb: ss.rgb[48]
+				#rgb: ss.getcolor()
+			Ellipse:
+				pos: self.x + 5, self.y + 5
+				size: self.width - 10, self.height - 10
+				texture: app.textures['logo']
+
+	Widget:
+		id: g2
+		size_hint: .125, .125
+		pos_hint: {'x': .75, 'y': .125}
+
+		canvas.after:
+			Color:
+				rgb: ss.rgb[49]
+				#rgb: ss.getcolor()
+			Ellipse:
+				pos: self.x + 5, self.y + 5
+				size: self.width - 10, self.height - 10
+				texture: app.textures['logo']
+
+	Widget:
+		id: g3
+		size_hint: .125, .125
+		pos_hint: {'x': .75, 'y': .25}
+
+		canvas.after:
+			Color:
+				rgb: ss.rgb[50]
+				#rgb: ss.getcolor()
+			Ellipse:
+				pos: self.x + 5, self.y + 5
+				size: self.width - 10, self.height - 10
+				texture: app.textures['logo']
+
+	Widget:
+		id: g4
+		size_hint: .125, .125
+		pos_hint: {'x': .75, 'y': .375}
+
+		canvas.after:
+			Color:
+				rgb: ss.rgb[51]
+				#rgb: ss.getcolor()
+			Ellipse:
+				pos: self.x + 5, self.y + 5
+				size: self.width - 10, self.height - 10
+				texture: app.textures['logo']
+
+	Widget:
+		id: g5
+		size_hint: .125, .125
+		pos_hint: {'x': .75, 'y': .5}
+
+		canvas.after:
+			Color:
+				rgb: ss.rgb[52]
+				#rgb: ss.getcolor()
+			Ellipse:
+				pos: self.x + 5, self.y + 5
+				size: self.width - 10, self.height - 10
+				texture: app.textures['logo']
+
+	Widget:
+		id: g6
+		size_hint: .125, .125
+		pos_hint: {'x': .75, 'y': .625}
+
+		canvas.after:
+			Color:
+				rgb: ss.rgb[53]
+				#rgb: ss.getcolor()
+			Ellipse:
+				pos: self.x + 5, self.y + 5
+				size: self.width - 10, self.height - 10
+				texture: app.textures['logo']
+
+	Widget:
+		id: g7
+		size_hint: .125, .125
+		pos_hint: {'x': .75, 'y': .75}
+
+		canvas.after:
+			Color:
+				rgb: ss.rgb[54]
+				#rgb: ss.getcolor()
+			Ellipse:
+				pos: self.x + 5, self.y + 5
+				size: self.width - 10, self.height - 10
+				texture: app.textures['logo']
+
+	Widget:
+		id: g8
+		size_hint: .125, .125
+		pos_hint: {'x': .75, 'y': .875}
+
+		canvas.after:
+			Color:
+				rgb: ss.rgb[55]
+				#rgb: ss.getcolor()
+			Ellipse:
+				pos: self.x + 5, self.y + 5
+				size: self.width - 10, self.height - 10
+				texture: app.textures['logo']
+
+	Widget:
+		id: h1
+		size_hint: .125, .125
+		pos_hint: {'x': .875, 'y': 0}
+
+		canvas.after:
+			Color:
+				rgb: ss.rgb[56]
+				#rgb: ss.getcolor()
+			Ellipse:
+				pos: self.x + 5, self.y + 5
+				size: self.width - 10, self.height - 10
+				texture: app.textures['logo']
+
+	Widget:
+		id: h2
+		size_hint: .125, .125
+		pos_hint: {'x': .875, 'y': .125}
+
+		canvas.after:
+			Color:
+				rgb: ss.rgb[57]
+				#rgb: ss.getcolor()
+			Ellipse:
+				pos: self.x + 5, self.y + 5
+				size: self.width - 10, self.height - 10
+				texture: app.textures['logo']
+
+	Widget:
+		id: h3
+		size_hint: .125, .125
+		pos_hint: {'x': .875, 'y': .25}
+
+		canvas.after:
+			Color:
+				rgb: ss.rgb[58]
+				#rgb: ss.getcolor()
+			Ellipse:
+				pos: self.x + 5, self.y + 5
+				size: self.width - 10, self.height - 10
+				texture: app.textures['logo']
+
+	Widget:
+		id: h4
+		size_hint: .125, .125
+		pos_hint: {'x': .875, 'y': .375}
+
+		canvas.after:
+			Color:
+				rgb: ss.rgb[59]
+				#rgb: ss.getcolor()
+			Ellipse:
+				pos: self.x + 5, self.y + 5
+				size: self.width - 10, self.height - 10
+				texture: app.textures['logo']
+
+	Widget:
+		id: h5
+		size_hint: .125, .125
+		pos_hint: {'x': .875, 'y': .5}
+
+		canvas.after:
+			Color:
+				rgb: ss.rgb[60]
+				#rgb: ss.getcolor()
+			Ellipse:
+				pos: self.x + 5, self.y + 5
+				size: self.width - 10, self.height - 10
+				texture: app.textures['logo']
+
+	Widget:
+		id: h6
+		size_hint: .125, .125
+		pos_hint: {'x': .875, 'y': .625}
+
+		canvas.after:
+			Color:
+				rgb: ss.rgb[61]
+				#rgb: ss.getcolor()
+			Ellipse:
+				pos: self.x + 5, self.y + 5
+				size: self.width - 10, self.height - 10
+				texture: app.textures['logo']
+
+	Widget:
+		id: h7
+		size_hint: .125, .125
+		pos_hint: {'x': .875, 'y': .75}
+
+		canvas.after:
+			Color:
+				rgb: ss.rgb[62]
+				#rgb: ss.getcolor()
+			Ellipse:
+				pos: self.x + 5, self.y + 5
+				size: self.width - 10, self.height - 10
+				texture: app.textures['logo']
+
+	Widget:
+		id: h8
+		size_hint: .125, .125
+		pos_hint: {'x': .875, 'y': .875}
+
+		canvas.after:
+			Color:
+				rgb: ss.rgb[63]
+				#rgb: ss.getcolor()
+			Ellipse:
+				pos: self.x + 5, self.y + 5
+				size: self.width - 10, self.height - 10
+				texture: app.textures['logo']
+
+
+
+
